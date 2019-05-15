@@ -20,7 +20,6 @@ class Solution {
 			s = s.substring(index + 1);
 			while(!s.equals(""))
 			{
-		//		System.out.println(s);
 				map.put(s,map.getOrDefault(s, 0) + num);
 				index = s.indexOf('.');
 				if(index == -1)
