@@ -4,7 +4,7 @@ class Solution {
         List<String> list = new ArrayList<String>();
         HashMap<String,Integer> map = null;
         
-        map = depart(cpdomains);
+        map = depart(cpdomains);               // 用hashmap把每个可能的域名都统计出来，域名做键值，次数做value
         for(String s : map.keySet())
         	list.add(map.get(s) + " " + s);
         return list;
@@ -15,16 +15,16 @@ class Solution {
 		HashMap<String,Integer> map = new HashMap<String,Integer>();
 		for(String s : cpdomains)
 		{
-			int index = s.indexOf(" ");
-			int num = Integer.parseInt(s.substring(0, index));
+			int index = s.indexOf(" ");          
+			int num = Integer.parseInt(s.substring(0, index));          //  分离次数
 			s = s.substring(index + 1);
 			while(!s.equals(""))
 			{
-				map.put(s,map.getOrDefault(s, 0) + num);
+				map.put(s,map.getOrDefault(s, 0) + num);      //  统计相加
 				index = s.indexOf('.');
 				if(index == -1)
 					break;
-				s = s.substring(index + 1);
+				s = s.substring(index + 1);            //  获得下一个父域名
 			}
 		}
 		return map;
