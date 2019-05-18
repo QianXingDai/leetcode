@@ -1,0 +1,34 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+
+    public boolean flipEquiv(TreeNode root1, TreeNode root2) {
+        if(root1 == null || root2 == null)
+            return root1 == root2;
+        if(root1.val != root2.val)
+            return false;
+        
+        int v1 = root1.left != null ? root1.left.val : 0;
+        int v2 = root2.left != null ? root2.left.val : 0;
+        if(v1 != v2)
+            swapLeaves(root1);
+        return flipEquiv(root1.left,root2.left) && flipEquiv(root1.right,root2.right);
+    }
+    
+    
+
+    
+    public static void swapLeaves(TreeNode root1)
+    {
+        TreeNode temp = root1.left;
+        root1.left = root1.right;
+        root1.right = temp;
+    }
+}
