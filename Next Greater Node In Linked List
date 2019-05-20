@@ -1,0 +1,62 @@
+/**
+ * 这个方法自己想的,leetcode评论区有更好的方法(用stack,但是我没看懂......)
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public int[] nextLargerNodes(ListNode head) {
+        int [] temp = null;
+        int [] res = null;
+        int max_index = 0;
+        
+        temp = listNodeToArray(head);          //  先把链表转成数组方便遍历
+        res = new int[temp.length];
+        if(temp.length < 1)
+            return res;
+        res[res.length - 1] = 0;              //  最后一个节点肯定返回0
+        max_index = temp.length - 1;          //  记录当前所遍历的最大值的下标
+        for(int i = temp.length - 2; i >= 0; i--)
+        {
+            if(temp[i] > temp[max_index])         //  如果当前要找的值比它后面的最大值还要大,直接是0
+            {
+                res[i] = 0;
+                max_index = i;                 //  更新最大值下标
+            }   
+            else                             //  否则从当前节点的下一个位置开始找,找到最大值所在节点位置为止
+            {
+                for(int j = i + 1; j <= max_index; j++)
+                {
+                    if(temp[j] > temp[i])
+                    {
+                        res[i] = temp[j];
+                        break;
+                    }
+                }
+            }
+        }
+        
+		return res;
+    }
+    
+    
+    public static int[] listNodeToArray(ListNode head)
+    {
+        int [] temp = null;
+        List<Integer> list = new ArrayList<Integer>();
+        ListNode p = head;
+
+        while(p != null)
+        {
+        	list.add(p.val);
+            p = p.next;
+        }
+        
+        temp = list.stream().mapToInt(Integer::valueOf).toArray();
+        return temp;
+    }
+    
+}
