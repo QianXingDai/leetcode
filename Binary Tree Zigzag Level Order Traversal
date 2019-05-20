@@ -4,64 +4,63 @@ public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
     Stack<TreeNode> stack2 = new Stack<TreeNode>();
     List<Integer> list = new ArrayList<Integer>();
 		
-		if(root == null)  return res;
-			
-		stack1.push(root);
-		list.add(root.val);
-		res.add(list);
-		list = new ArrayList<Integer>();
-		int i = 0;
-		
-		while(!stack1.isEmpty())
+    if(root == null)  return res;
+	
+    stack1.push(root);
+    list.add(root.val);
+    res.add(list);
+    list = new ArrayList<Integer>();
+    int i = 0;
+
+    while(!stack1.isEmpty())
+    {
+		if(i % 2 == 0)
 		{
-			if(i % 2 == 0)
+			while(!stack1.isEmpty())
 			{
-				while(!stack1.isEmpty())
+				TreeNode p = stack1.pop();
+				if(p.right != null)
 				{
-					TreeNode p = stack1.pop();
-					if(p.right != null)
-					{
-						stack2.push(p.right);
-						list.add(p.right.val);
-					}
-					if(p.left != null)
-					{
-						stack2.push(p.left);
-						list.add(p.left.val);
-					}
-			  }
-        if(list.size() > 0)
-            res.add(list);
+					stack2.push(p.right);
+					list.add(p.right.val);
+				}
+				if(p.left != null)
+				{
+					stack2.push(p.left);
+					list.add(p.left.val);
+				}
+			}
+		if(list.size() > 0)
+			res.add(list);
         list = new ArrayList<Integer>();
         Stack<TreeNode> temp = stack1;
         stack1 = stack2;
         stack2 = temp;
-		  }
-			else
-			{
-				while(!stack1.isEmpty())
-				{
-					TreeNode p = stack1.pop();
-					if(p.left != null)
-					{
-						stack2.push(p.left);
-						list.add(p.left.val);
-					}
-					if(p.right != null)
-					{
-						stack2.push(p.right);
-						list.add(p.right.val);
-					}
-			  }
-        if(list.size() > 0)
-				    res.add(list);
-				list = new ArrayList<Integer>();
-				Stack<TreeNode> temp = stack1;
-				stack1 = stack2;
-        stack2 = temp;
-			}
-			i++;
 		}
-
-		return res;
+		else
+		{
+			while(!stack1.isEmpty())
+			{
+				TreeNode p = stack1.pop();
+				if(p.left != null)
+				{
+					stack2.push(p.left);
+					list.add(p.left.val);
+				}
+				if(p.right != null)
+				{
+					stack2.push(p.right);
+					list.add(p.right.val);
+				}
+		  	}
+            if(list.size() > 0)
+		    	res.add(list);
+			list = new ArrayList<Integer>();
+			Stack<TreeNode> temp = stack1;
+			stack1 = stack2;
+        	stack2 = temp;
+		}
+		i++;
+	}
+	return res;
 }
