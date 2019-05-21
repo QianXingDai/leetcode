@@ -1,0 +1,21 @@
+/*  https://leetcode.com/problems/next-greater-element-i/discuss/97595/Java-10-lines-linear-time-complexity-O(n)-with-explanation
+ *  这位大佬解释的很好
+ */
+class Solution {
+    public int[] nextGreaterElement(int[] nums1, int[] nums2) {
+        Stack<Integer> stack = new Stack<Integer>();
+        HashMap<Integer,Integer> hashmap = new HashMap<Integer,Integer>();
+        
+        for(int i = 0; i < nums2.length; i++)
+        {
+            while(!stack.isEmpty() && nums2[i] > stack.peek())           //  使栈保持一个递减的序列,一旦出现递增则退出循环,说明该元素有元素比它大
+                hashmap.put(stack.pop(),nums2[i]);
+            stack.push(nums2[i]);
+        }
+        
+        for(int i = 0; i < nums1.length; i++)
+            nums1[i] = hashmap.getOrDefault(nums1[i],-1);
+        
+        return nums1;
+    }
+}
